@@ -59,8 +59,7 @@ function App() {
         onChange={(e) => setFirstName(e.target.value)}
       />
       <input
-        data-
-        testid="input2"
+        data-testid="input2"
         name="name2"
         placeholder="Enter second name"
         value={secondName}
