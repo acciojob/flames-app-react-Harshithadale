@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
 
 function App() {
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
   const [answer, setAnswer] = useState("");
-
   const answerArray = [
     "Siblings",
     "Friends",
@@ -13,7 +13,6 @@ function App() {
     "Marriage",
     "Enemy",
   ];
-
   function getMappedValues(str) {
     const map = new Map();
     for (let char of str) {
@@ -21,17 +20,15 @@ function App() {
     }
     return map;
   }
-
   function getRemovedValues(char1, char2) {
     for (let [char, count] of char1.entries()) {
-      if (char2.has(char)) {
+      if (char2.get(char)) {
         const minCount = Math.min(count, char2.get(char));
         char1.set(char, count - minCount);
         char2.set(char, char2.get(char) - minCount);
       }
     }
   }
-
   function getFinalSum(map) {
     let sum = 0;
     for (let val of map.values()) {
@@ -39,29 +36,19 @@ function App() {
     }
     return sum;
   }
-
   const calculateRelationShip = (e) => {
     e.preventDefault();
-    setAnswer("");
-
+    setAnswer("")
     if (firstName === "" || secondName === "") {
       setAnswer("Please Enter valid input");
       return;
     }
-
     const firstNameMap = getMappedValues(firstName);
     const secondNameMap = getMappedValues(secondName);
-
     getRemovedValues(firstNameMap, secondNameMap);
-
-    const total =
-      getFinalSum(firstNameMap) + getFinalSum(secondNameMap);
-
-    const result = total % 6;
-
-    setAnswer(answerArray[result]);
+    const total = getFinalSum(firstNameMap) + getFinalSum(secondNameMap);
+    setAnswer(answerArray[total%6])
   };
-
   return (
     <div>
       <input
@@ -88,7 +75,7 @@ function App() {
       <button
         data-testid="clear"
         name="clear"
-        onClick={() => {
+        onClick={(e) => {
           setAnswer("");
           setFirstName("");
           setSecondName("");
